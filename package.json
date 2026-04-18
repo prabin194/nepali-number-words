@@ -1,6 +1,6 @@
 {
   "name": "nepali-number-words",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "A lightweight, framework-independent TypeScript library for converting numbers and monetary amounts to Nepali words",
   "type": "module",
   "main": "./dist/index.js",
