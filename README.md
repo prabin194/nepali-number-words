@@ -3,6 +3,8 @@
 [![npm](https://img.shields.io/npm/v/nepali-number-words)](https://www.npmjs.com/package/nepali-number-words)
 [![downloads](https://img.shields.io/npm/dw/nepali-number-words)](https://www.npmjs.com/package/nepali-number-words)
 
+[**Try the Demo →**](https://prabin194.github.io/portfolio/projects/nepali-number-words)
+
 A lightweight, framework-independent TypeScript library for converting numbers and monetary amounts to Nepali words.
 
 ## Features
