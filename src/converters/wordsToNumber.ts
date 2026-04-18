@@ -39,11 +39,9 @@ const SCALE_NAME_TO_VALUE: Record<string, number> = {
  * Removes currency-related words from the input
  */
 function removeCurrencyWords(words: string): string {
-  let cleaned = words;
-  for (const word of CURRENCY_WORDS_TO_REMOVE) {
-    cleaned = cleaned.replace(new RegExp(word, "g"), "");
-  }
-  return cleaned.trim();
+  const wordList = words.split(/\s+/).filter((w) => w);
+  const filtered = wordList.filter((word) => !CURRENCY_WORDS_TO_REMOVE.includes(word));
+  return filtered.join(" ").trim();
 }
 
 /**
