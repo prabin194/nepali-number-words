@@ -1,7 +1,7 @@
 {
   "name": "nepali-number-words",
-  "version": "0.1.3",
-  "description": "A lightweight, framework-independent TypeScript library for converting numbers and monetary amounts to Nepali words",
+  "version": "1.0.0",
+  "description": "Convert numbers and currency amounts to Nepali words, format Nepali currency, and handle Devanagari digits.",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -29,13 +29,19 @@
   },
   "keywords": [
     "nepali",
-    "number",
+    "number to words",
     "currency",
-    "words",
+    "nepali currency",
+    "num2words",
     "devanagari",
     "nepal",
+    "amount in words",
     "rupees",
-    "translation"
+    "paisa",
+    "nepali numbers",
+    "nepali translation",
+    "currency formatting",
+    "indian numbering"
   ],
   "author": "prabin194",
   "license": "MIT",

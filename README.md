@@ -1,5 +1,8 @@
 # Nepali Number & Currency Words Library
 
+[![npm](https://img.shields.io/npm/v/nepali-number-words)](https://www.npmjs.com/package/nepali-number-words)
+[![downloads](https://img.shields.io/npm/dw/nepali-number-words)](https://www.npmjs.com/package/nepali-number-words)
+
 A lightweight, framework-independent TypeScript library for converting numbers and monetary amounts to Nepali words.
 
 ## Features
@@ -23,29 +26,33 @@ npm install nepali-number-words
 
 ```ts
 import {
-  numberToNepaliWords,
-  amountToNepaliWords,
-  nepaliWordsToNumber,
-  toDevanagariDigits,
+  toNepaliWords,
+  toNepaliAmount,
+  toNepaliDigits,
+  toNepaliText,
   formatNepaliCurrency,
 } from "nepali-number-words";
 
-// Convert numbers to Nepali words
-numberToNepaliWords(4750); // "चार हजार सात सय पचास"
-numberToNepaliWords(0); // "शून्य"
-numberToNepaliWords(-100); // "ऋणात्मक एक सय"
+// Convert numbers to Nepali words (shorter API)
+toNepaliWords(4750); // "चार हजार सात सय पचास"
+toNepaliWords(0); // "शून्य"
+toNepaliWords(-100); // "ऋणात्मक एक सय"
 
-// Convert monetary amounts to Nepali currency words
-amountToNepaliWords(4750); // "चार हजार सात सय पचास रुपैयाँ मात्र"
-amountToNepaliWords(4750.50); // "चार हजार सात सय पचास रुपैयाँ पचास पैसा मात्र"
+// Convert monetary amounts to Nepali currency words (shorter API)
+toNepaliAmount(4750); // "चार हजार सात सय पचास रुपैयाँ मात्र"
+toNepaliAmount(4750.50); // "चार हजार सात सय पचास रुपैयाँ पचास पैसा मात्र"
 
 // Convert Nepali words back to numbers (experimental)
 nepaliWordsToNumber("एक सय"); // 100
 nepaliWordsToNumber("शून्य"); // 0
 
-// Convert Arabic digits to Devanagari
-toDevanagariDigits("4750.50"); // "४७५०.५०"
-toDevanagariDigits(4750.50); // "४७५०.५०"
+// Convert digits in mixed text (shorter API)
+toNepaliDigits("asjdajsd 98989as dasd s"); // "asjdajsd ९८९८९as dasd s"
+toNepaliDigits("Rs. 4750.00"); // "Rs. ४७५०.००"
+
+// Replace numbers in text with Nepali words (shorter API)
+toNepaliText("Pay 4750 now"); // "Pay चार हजार सात सय पचास now"
+toNepaliText("Amount 500 and fee 25"); // "Amount पाँच सय and fee पच्चीस"
 
 // Format currency with Indian/Nepali grouping
 formatNepaliCurrency(4750); // "रु. 4,750.00"
@@ -54,7 +61,7 @@ formatNepaliCurrency(4750, { devanagari: true }); // "रु. ४,७५०.०�
 
 ## API Reference
 
-### `numberToNepaliWords(value, options?)`
+### `toNepaliWords(value, options?)`
 
 Converts a number to Nepali words.
 
@@ -74,19 +81,19 @@ type NumberWordOptions = {
 
 **Examples:**
 ```ts
-numberToNepaliWords(0); // "शून्य"
-numberToNepaliWords(99); // "उनान्सय"
-numberToNepaliWords(100); // "एक सय"
-numberToNepaliWords(4750); // "चार हजार सात सय पचास"
-numberToNepaliWords(100000); // "एक लाख"
-numberToNepaliWords(10000000); // "एक करोड"
-numberToNepaliWords(1000000000); // "एक अर्ब"
+toNepaliWords(0); // "शून्य"
+toNepaliWords(99); // "उनान्सय"
+toNepaliWords(100); // "एक सय"
+toNepaliWords(4750); // "चार हजार सात सय पचास"
+toNepaliWords(100000); // "एक लाख"
+toNepaliWords(10000000); // "एक करोड"
+toNepaliWords(1000000000); // "एक अर्ब"
 
 // With capitalizeFirst option
-numberToNepaliWords(4750, { capitalizeFirst: true }); // "चार हजार सात सय पचास"
+toNepaliWords(4750, { capitalizeFirst: true }); // "चार हजार सात सय पचास"
 ```
 
-### `amountToNepaliWords(value, options?)`
+### `toNepaliAmount(value, options?)`
 
 Converts a monetary amount to Nepali currency words.
 
@@ -109,20 +116,20 @@ type AmountWordOptions = {
 
 **Examples:**
 ```ts
-amountToNepaliWords(4750); // "चार हजार सात सय पचास रुपैयाँ मात्र"
-amountToNepaliWords(4750.50); // "चार हजार सात सय पचास रुपैयाँ पचास पैसा मात्र"
+toNepaliAmount(4750); // "चार हजार सात सय पचास रुपैयाँ मात्र"
+toNepaliAmount(4750.50); // "चार हजार सात सय पचास रुपैयाँ पचास पैसा मात्र"
 
 // Without "मात्र"
-amountToNepaliWords(4750, { appendOnly: false }); // "चार हजार सात सय पचास रुपैयाँ"
+toNepaliAmount(4750, { appendOnly: false }); // "चार हजार सात सय पचास रुपैयाँ"
 
 // With "र" separator
-amountToNepaliWords(4750.50, { paisaSeparator: "and" }); // "चार हजार सात सय पचास रुपैयाँ र पचास पैसा मात्र"
+toNepaliAmount(4750.50, { paisaSeparator: "and" }); // "चार हजार सात सय पचास रुपैयाँ र पचास पैसा मात्र"
 
 // Hide paisa
-amountToNepaliWords(4750.50, { showPaisa: false }); // "चार हजार सात सय पचास रुपैयाँ मात्र"
+toNepaliAmount(4750.50, { showPaisa: false }); // "चार हजार सात सय पचास रुपैयाँ मात्र"
 
 // Cheque style formatting
-amountToNepaliWords(4750, { chequeStyle: true }); // "चार  हजार  सात  सय  पचास  रुपैयाँ  मात्र"
+toNepaliAmount(4750, { chequeStyle: true }); // "चार  हजार  सात  सय  पचास  रुपैयाँ  मात्र"
 ```
 
 ### `nepaliWordsToNumber(words)`
@@ -145,9 +152,9 @@ nepaliWordsToNumber("एक सय"); // 100
 nepaliWordsToNumber("ऋणात्मक एक सय"); // -100
 ```
 
-### `toDevanagariDigits(value)`
+### `toNepaliDigits(value)`
 
-Converts Arabic numerals to Devanagari numerals.
+Converts Arabic numerals to Devanagari numerals. Non-digit text remains unchanged.
 
 **Parameters:**
 - `value: string | number` - The value to convert
@@ -156,10 +163,30 @@ Converts Arabic numerals to Devanagari numerals.
 
 **Examples:**
 ```ts
-toDevanagariDigits("4750.50"); // "४७५०.५०"
-toDevanagariDigits(4750.50); // "४७५०.५०"
-toDevanagariDigits("1,23,456.78"); // "१,२३,४५६.७८"
-toDevanagariDigits("रु. 4,750.00"); // "रु. ४,७५०.००"
+toNepaliDigits("4750.50"); // "४७५०.५०"
+toNepaliDigits(4750.50); // "४७५०.५०"
+toNepaliDigits("1,23,456.78"); // "१,२३,४५६.७८"
+toNepaliDigits("रु. 4,750.00"); // "रु. ४,७५०.००"
+toNepaliDigits("asjdajsd 98989as dasd s"); // "asjdajsd ९८९८९as dasd s"
+toNepaliDigits("Invoice #12345"); // "Invoice #१२३४५"
+```
+
+### `toNepaliText(input)`
+
+Replaces standalone numbers in text with Nepali words. Non-numeric text remains unchanged. If no valid standalone numbers are found, returns the original string unchanged.
+
+**Parameters:**
+- `input: string` - The text to transform
+
+**Returns:** `string`
+
+**Examples:**
+```ts
+toNepaliText("Pay 4750 now"); // "Pay चार हजार सात सय पचास now"
+toNepaliText("Amount 500 and fee 25"); // "Amount पाँच सय and fee पच्चीस"
+toNepaliText("asjdajsd 98989as dasd s"); // "asjdajsd 98989as dasd s" (no standalone number)
+toNepaliText("Rs. 4750.50"); // "Rs. चार हजार सात सय पचास रुपैयाँ पचास पैसा मात्र"
+toNepaliText("Hello world"); // "Hello world" (no numbers)
 ```
 
 ### `formatNepaliCurrency(value, options?)`
@@ -211,13 +238,13 @@ This library is framework-agnostic and works in:
 ### React Example
 
 ```tsx
-import { amountToNepaliWords } from "nepali-number-words";
+import { toNepaliAmount } from "nepali-number-words";
 
 function Invoice({ amount }: { amount: number }) {
   return (
     <div>
       <p>Amount: {amount}</p>
-      <p>In words: {amountToNepaliWords(amount)}</p>
+      <p>In words: {toNepaliAmount(amount)}</p>
     </div>
   );
 }
@@ -227,7 +254,7 @@ function Invoice({ amount }: { amount: number }) {
 
 ```vue
 <script setup lang="ts">
-import { amountToNepaliWords } from "nepali-number-words";
+import { toNepaliAmount } from "nepali-number-words";
 
 const amount = 4750.50;
 </script>
@@ -235,7 +262,7 @@ const amount = 4750.50;
 <template>
   <div>
     <p>Amount: {{ amount }}</p>
-    <p>In words: {{ amountToNepaliWords(amount) }}</p>
+    <p>In words: {{ toNepaliAmount(amount) }}</p>
   </div>
 </template>
 ```
@@ -243,10 +270,10 @@ const amount = 4750.50;
 ### Node.js Example
 
 ```ts
-import { amountToNepaliWords } from "nepali-number-words";
+import { toNepaliAmount } from "nepali-number-words";
 
 const amount = 4750.50;
-console.log(amountToNepaliWords(amount));
+console.log(toNepaliAmount(amount));
 // Output: चार हजार सात सय पचास रुपैयाँ पचास पैसा मात्र
 ```
 
@@ -257,33 +284,33 @@ console.log(amountToNepaliWords(amount));
 The library throws descriptive errors for invalid inputs:
 
 ```ts
-numberToNepaliWords(NaN); // Throws: "Invalid input: expected a finite number, received number: NaN"
-numberToNepaliWords(Infinity); // Throws: "Invalid input: expected a finite number, received number: Infinity"
-numberToNepaliWords("4750" as unknown as number); // Throws: "Invalid input: expected a finite number, received string: 4750"
+toNepaliWords(NaN); // Throws: "Invalid input: expected a finite number, received number: NaN"
+toNepaliWords(Infinity); // Throws: "Invalid input: expected a finite number, received number: Infinity"
+toNepaliWords("4750" as unknown as number); // Throws: "Invalid input: expected a finite number, received string: 4750"
 ```
 
 ### Zero
 
 ```ts
-numberToNepaliWords(0); // "शून्य"
-amountToNepaliWords(0); // "शून्य रुपैयाँ मात्र"
+toNepaliWords(0); // "शून्य"
+toNepaliAmount(0); // "शून्य रुपैयाँ मात्र"
 ```
 
 ### Negative Numbers
 
 ```ts
-numberToNepaliWords(-4750); // "ऋणात्मक चार हजार सात सय पचास"
-amountToNepaliWords(-4750.50); // "ऋणात्मक चार हजार सात सय पचास रुपैयाँ पचास पैसा मात्र"
+toNepaliWords(-4750); // "ऋणात्मक चार हजार सात सय पचास"
+toNepaliAmount(-4750.50); // "ऋणात्मक चार हजार सात सय पचास रुपैयाँ पचास पैसा मात्र"
 ```
 
 ### Decimal Handling
 
-- `numberToNepaliWords` truncates decimals
-- `amountToNepaliWords` rounds to 2 decimal places
+- `toNepaliWords` truncates decimals
+- `toNepaliAmount` rounds to 2 decimal places
 
 ```ts
-numberToNepaliWords(4750.99); // "चार हजार सात सय पचास"
-amountToNepaliWords(4750.555); // "चार हजार सात सय पचास रुपैयाँ पचपन्न पैसा मात्र"
+toNepaliWords(4750.99); // "चार हजार सात सय पचास"
+toNepaliAmount(4750.555); // "चार हजार सात सय पचास रुपैयाँ पचपन्न पैसा मात्र"
 ```
 
 ## Supported Number Ranges

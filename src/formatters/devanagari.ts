@@ -8,12 +8,12 @@ import { DEVANAGARI_DIGITS } from "../constants.js";
  *
  * @example
  * ```ts
- * toDevanagariDigits("4750.50") // "४७५०.५०"
- * toDevanagariDigits(4750.50) // "४७५०.५०"
- * toDevanagariDigits("1,23,456.78") // "१,२३,४५६.७८"
+ * toNepaliDigits("4750.50") // "४७५०.५०"
+ * toNepaliDigits(4750.50) // "४७५०.५०"
+ * toNepaliDigits("1,23,456.78") // "१,२३,४५६.७८"
  * ```
  */
-export function toDevanagariDigits(value: string | number): string {
+export function toNepaliDigits(value: string | number): string {
   // For numbers with decimals, use toFixed to preserve trailing zeros
   const stringValue =
     typeof value === "number" && !Number.isInteger(value)
@@ -31,3 +31,4 @@ export function toDevanagariDigits(value: string | number): string {
 
   return result;
 }
+

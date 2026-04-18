@@ -77,6 +77,7 @@ function processWordList(wordList: string[]): number {
     } else if (WORD_TO_NUMBER_MAP[word] !== undefined) {
       current += WORD_TO_NUMBER_MAP[word];
     }
+    // Unknown words are silently ignored (experimental feature limitation)
   }
 
   return total + current;

@@ -3,6 +3,11 @@ import { isValidNumber, throwInvalidInput, capitalize } from "../utils.js";
 import type { NumberWordOptions } from "../types.js";
 
 /**
+ * Maximum supported number (खर्ब = 100,000,000,000)
+ */
+const MAX_SUPPORTED_NUMBER = 100000000000;
+
+/**
  * Converts a number to Nepali words
  *
  * @param value - The number to convert
@@ -11,12 +16,12 @@ import type { NumberWordOptions } from "../types.js";
  *
  * @example
  * ```ts
- * numberToNepaliWords(4750) // "चार हजार सात सय पचास"
- * numberToNepaliWords(0) // "शून्य"
- * numberToNepaliWords(-100) // "ऋणात्मक एक सय"
+ * toNepaliWords(4750) // "चार हजार सात सय पचास"
+ * toNepaliWords(0) // "शून्य"
+ * toNepaliWords(-100) // "ऋणात्मक एक सय"
  * ```
  */
-export function numberToNepaliWords(
+export function toNepaliWords(
   value: number,
   options?: NumberWordOptions
 ): string {
@@ -24,17 +29,24 @@ export function numberToNepaliWords(
     throwInvalidInput(value);
   }
 
+  // Check if number exceeds maximum supported value
+  if (Math.abs(value) > MAX_SUPPORTED_NUMBER) {
+    throw new Error(
+      `Number exceeds maximum supported value of ${MAX_SUPPORTED_NUMBER.toLocaleString()} (खर्ब). Received: ${value}`
+    );
+  }
+
   const { capitalizeFirst = false } = options || {};
 
-  // Handle zero
-  if (value === 0) {
+  // Handle zero (including -0)
+  if (value === 0 || Object.is(value, -0)) {
     const result = NUMBER_WORDS[0];
     return capitalizeFirst ? capitalize(result) : result;
   }
 
   // Handle negative numbers
   if (value < 0) {
-    const result = `ऋणात्मक ${numberToNepaliWords(Math.abs(value), options)}`;
+    const result = `ऋणात्मक ${toNepaliWords(Math.abs(value), options)}`;
     return capitalizeFirst ? capitalize(result) : result;
   }
 
@@ -96,3 +108,4 @@ function convertIntegerToWords(value: number): string {
 
   return words.join(" ").trim();
 }
+

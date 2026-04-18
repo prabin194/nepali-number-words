@@ -1,4 +1,4 @@
-import { toDevanagariDigits } from "./devanagari.js";
+import { toNepaliDigits } from "./devanagari.js";
 import { isValidNumber, throwInvalidInput, formatWithIndianGrouping } from "../utils.js";
 import type { CurrencyFormatOptions } from "../types.js";
 
@@ -13,7 +13,7 @@ function formatWithDecimals(value: number, decimals: number): string {
  * Converts to Devanagari digits if requested
  */
 function applyDevanagariIfNeeded(value: string, useDevanagari: boolean): string {
-  return useDevanagari ? toDevanagariDigits(value) : value;
+  return useDevanagari ? toNepaliDigits(value) : value;
 }
 
 /**

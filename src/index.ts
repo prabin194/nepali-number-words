@@ -5,11 +5,12 @@
  * numbers and monetary amounts to Nepali words.
  */
 
-export { numberToNepaliWords } from "./converters/numberToWords.js";
-export { amountToNepaliWords } from "./converters/amountToWords.js";
+export { toNepaliWords } from "./converters/numberToWords.js";
+export { toNepaliAmount } from "./converters/amountToWords.js";
 export { nepaliWordsToNumber } from "./converters/wordsToNumber.js";
-export { toDevanagariDigits } from "./formatters/devanagari.js";
+export { toNepaliDigits } from "./formatters/devanagari.js";
 export { formatNepaliCurrency } from "./formatters/currencyFormat.js";
+export { toNepaliText } from "./transformers/textTransformer.js";
 
 export type {
   NumberWordOptions,

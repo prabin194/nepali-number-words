@@ -1,4 +1,4 @@
-import { numberToNepaliWords } from "./numberToWords.js";
+import { toNepaliWords } from "./numberToWords.js";
 import { CURRENCY_WORDS } from "../constants.js";
 import { isValidNumber, roundToDecimals, throwInvalidInput, applyChequeStyle } from "../utils.js";
 import type { AmountWordOptions } from "../types.js";
@@ -12,12 +12,12 @@ import type { AmountWordOptions } from "../types.js";
  *
  * @example
  * ```ts
- * amountToNepaliWords(4750) // "चार हजार सात सय पचास रुपैयाँ मात्र"
- * amountToNepaliWords(4750.50) // "चार हजार सात सय पचास रुपैयाँ पचास पैसा मात्र"
- * amountToNepaliWords(4750.50, { appendOnly: false }) // "चार हजार सात सय पचास रुपैयाँ पचास पैसा"
+ * toNepaliAmount(4750) // "चार हजार सात सय पचास रुपैयाँ मात्र"
+ * toNepaliAmount(4750.50) // "चार हजार सात सय पचास रुपैयाँ पचास पैसा मात्र"
+ * toNepaliAmount(4750.50, { appendOnly: false }) // "चार हजार सात सय पचास रुपैयाँ पचास पैसा"
  * ```
  */
-export function amountToNepaliWords(
+export function toNepaliAmount(
   value: number,
   options: AmountWordOptions = {}
 ): string {
@@ -48,7 +48,7 @@ export function amountToNepaliWords(
   if (rupees === 0) {
     parts.push(zeroRupeeText);
   } else {
-    parts.push(numberToNepaliWords(rupees));
+    parts.push(toNepaliWords(rupees));
   }
   parts.push(CURRENCY_WORDS.RUPEES);
 
@@ -57,7 +57,7 @@ export function amountToNepaliWords(
     if (paisaSeparator === "and") {
       parts.push(CURRENCY_WORDS.AND);
     }
-    parts.push(numberToNepaliWords(paisa), CURRENCY_WORDS.PAISA);
+    parts.push(toNepaliWords(paisa), CURRENCY_WORDS.PAISA);
   }
 
   // Append "मात्र" if requested
@@ -78,3 +78,4 @@ export function amountToNepaliWords(
 
   return result;
 }
+
