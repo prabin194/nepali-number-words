@@ -2,17 +2,7 @@
  * Options for number to Nepali words conversion
  */
 export interface NumberWordOptions {
-  /**
-   * Word variant: formal or common
-   * @default "common"
-   */
-  variant?: "formal" | "common";
-
-  /**
-   * Whether to capitalize the first letter
-   * @default false
-   */
-  capitalizeFirst?: boolean;
+  // Reserved for future options
 }
 
 /**
