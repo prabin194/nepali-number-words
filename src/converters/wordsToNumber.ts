@@ -70,14 +70,23 @@ function processWordList(wordList: string[]): number {
   for (const word of wordList) {
     if (SCALE_NAME_TO_VALUE[word]) {
       const scale = SCALE_NAME_TO_VALUE[word];
-      const multiplier = current === 0 ? 1 : current;
-      current = multiplier * scale;
+      // If current is 0, this scale word has no multiplier - invalid input
+      if (current === 0) {
+        throw new Error(
+          `Invalid Nepali number format: scale word "${word}" without preceding number`
+        );
+      }
+      current = current * scale;
       total += current;
       current = 0;
     } else if (WORD_TO_NUMBER_MAP[word] !== undefined) {
       current += WORD_TO_NUMBER_MAP[word];
+    } else {
+      // Unknown word - throw error instead of silently ignoring
+      throw new Error(
+        `Unknown word in Nepali number: "${word}"`
+      );
     }
-    // Unknown words are silently ignored (experimental feature limitation)
   }
 
   return total + current;
@@ -119,7 +128,9 @@ export function nepaliWordsToNumber(words: string): number {
   const cleanWords = removeCurrencyWords(trimmed);
 
   if (!cleanWords) {
-    return 0;
+    throw new Error(
+      "Invalid input: no recognizable Nepali number words found"
+    );
   }
 
   const wordList = cleanWords.split(/\s+/).filter((w) => w);

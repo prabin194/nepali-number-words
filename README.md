@@ -31,6 +31,7 @@ import {
   toNepaliDigits,
   toNepaliText,
   formatNepaliCurrency,
+  nepaliWordsToNumber,
 } from "nepali-number-words";
 
 // Convert numbers to Nepali words (shorter API)
@@ -41,10 +42,6 @@ toNepaliWords(-100); // "ऋणात्मक एक सय"
 // Convert monetary amounts to Nepali currency words (shorter API)
 toNepaliAmount(4750); // "चार हजार सात सय पचास रुपैयाँ मात्र"
 toNepaliAmount(4750.50); // "चार हजार सात सय पचास रुपैयाँ पचास पैसा मात्र"
-
-// Convert Nepali words back to numbers (experimental)
-nepaliWordsToNumber("एक सय"); // 100
-nepaliWordsToNumber("शून्य"); // 0
 
 // Convert digits in mixed text (shorter API)
 toNepaliDigits("asjdajsd 98989as dasd s"); // "asjdajsd ९८९८९as dasd s"
@@ -57,6 +54,10 @@ toNepaliText("Amount 500 and fee 25"); // "Amount पाँच सय and fee �
 // Format currency with Indian/Nepali grouping
 formatNepaliCurrency(4750); // "रु. 4,750.00"
 formatNepaliCurrency(4750, { devanagari: true }); // "रु. ४,७५०.००"
+
+// Convert Nepali words back to numbers (experimental - throws on invalid input)
+nepaliWordsToNumber("एक सय"); // 100
+nepaliWordsToNumber("शून्य"); // 0
 ```
 
 ## API Reference
@@ -74,8 +75,7 @@ Converts a number to Nepali words.
 **Options:**
 ```ts
 type NumberWordOptions = {
-  variant?: "formal" | "common"; // Default: "common"
-  capitalizeFirst?: boolean; // Capitalize first letter. Default: false
+  // Reserved for future options
 };
 ```
 
@@ -88,9 +88,6 @@ toNepaliWords(4750); // "चार हजार सात सय पचास"
 toNepaliWords(100000); // "एक लाख"
 toNepaliWords(10000000); // "एक करोड"
 toNepaliWords(1000000000); // "एक अर्ब"
-
-// With capitalizeFirst option
-toNepaliWords(4750, { capitalizeFirst: true }); // "चार हजार सात सय पचास"
 ```
 
 ### `toNepaliAmount(value, options?)`
@@ -136,12 +133,14 @@ toNepaliAmount(4750, { chequeStyle: true }); // "चार  हजार  सा
 
 Converts Nepali words back to a number.
 
-> **Experimental:** This feature has limited scope and may not handle all edge cases.
+> **Experimental:** This feature has limited scope and may not handle all edge cases. It throws errors for unknown words or invalid format.
 
 **Parameters:**
 - `words: string` - The Nepali words to convert
 
 **Returns:** `number`
+
+**Throws:** `Error` if input contains unknown words or invalid format
 
 **Examples:**
 ```ts
@@ -150,6 +149,7 @@ nepaliWordsToNumber("एक"); // 1
 nepaliWordsToNumber("पचास"); // 50
 nepaliWordsToNumber("एक सय"); // 100
 nepaliWordsToNumber("ऋणात्मक एक सय"); // -100
+nepaliWordsToNumber("चार हजार सात सय पचास"); // 4750
 ```
 
 ### `toNepaliDigits(value)`
@@ -165,6 +165,7 @@ Converts Arabic numerals to Devanagari numerals. Non-digit text remains unchange
 ```ts
 toNepaliDigits("4750.50"); // "४७५०.५०"
 toNepaliDigits(4750.50); // "४७५०.५०"
+toNepaliDigits(12.3); // "१२.३"
 toNepaliDigits("1,23,456.78"); // "१,२३,४५६.७८"
 toNepaliDigits("रु. 4,750.00"); // "रु. ४,७५०.००"
 toNepaliDigits("asjdajsd 98989as dasd s"); // "asjdajsd ९८९८९as dasd s"

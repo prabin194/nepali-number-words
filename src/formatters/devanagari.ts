@@ -14,11 +14,8 @@ import { DEVANAGARI_DIGITS } from "../constants.js";
  * ```
  */
 export function toNepaliDigits(value: string | number): string {
-  // For numbers with decimals, use toFixed to preserve trailing zeros
-  const stringValue =
-    typeof value === "number" && !Number.isInteger(value)
-      ? value.toFixed(2)
-      : String(value);
+  // Convert to string, preserving original decimal representation
+  const stringValue = String(value);
   let result = "";
 
   for (const char of stringValue) {

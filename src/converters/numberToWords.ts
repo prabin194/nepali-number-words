@@ -1,5 +1,5 @@
 import { NUMBER_WORDS, SCALE_NAMES, SCALE_VALUES } from "../constants.js";
-import { isValidNumber, throwInvalidInput, capitalize } from "../utils.js";
+import { isValidNumber, throwInvalidInput } from "../utils.js";
 import type { NumberWordOptions } from "../types.js";
 
 /**
@@ -36,25 +36,20 @@ export function toNepaliWords(
     );
   }
 
-  const { capitalizeFirst = false } = options || {};
-
   // Handle zero (including -0)
   if (value === 0 || Object.is(value, -0)) {
-    const result = NUMBER_WORDS[0];
-    return capitalizeFirst ? capitalize(result) : result;
+    return NUMBER_WORDS[0];
   }
 
   // Handle negative numbers
   if (value < 0) {
-    const result = `ऋणात्मक ${toNepaliWords(Math.abs(value), options)}`;
-    return capitalizeFirst ? capitalize(result) : result;
+    return `ऋणात्मक ${toNepaliWords(Math.abs(value), options)}`;
   }
 
   // Convert to integer for processing (truncate decimals)
   const intValue = Math.floor(Math.abs(value));
 
-  const result = convertIntegerToWords(intValue);
-  return capitalizeFirst ? capitalize(result) : result;
+  return convertIntegerToWords(intValue);
 }
 
 /**

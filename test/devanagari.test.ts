@@ -24,7 +24,8 @@ describe("toNepaliDigits", () => {
   describe("number input", () => {
     it("should convert number input", () => {
       expect(toNepaliDigits(4750)).toBe("४७५०");
-      expect(toNepaliDigits(4750.50)).toBe("४७५०.५०");
+      expect(toNepaliDigits(4750.50)).toBe("४७५०.५");
+      expect(toNepaliDigits(12.3)).toBe("१२.३");
       expect(toNepaliDigits(0)).toBe("०");
     });
   });
